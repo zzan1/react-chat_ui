@@ -1,13 +1,13 @@
 import React from "react"; //rfcp
 import PropTypes from "prop-types";
-import face1 from "../../assets/images/face-male-1.jpg";
+import face1 from "assets/images/face-male-1.jpg";
 import {
   WrapperAvatar,
   StatusAvatar,
   ImgWrapperAvatar,
   PortraitAvatar,
 } from "./style";
-import theme from "../../theme";
+import theme from "theme";
 
 // 使用 ...rest 来接受剩下的对象元素，组成一个名字为 rest 的数组；
 // 如果直接在 <WrapperAvatar {rest}> <WrapperAvatar rest> 都不能传参数;
