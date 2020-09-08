@@ -3,10 +3,10 @@ import styled, { css } from "styled-components";
 // 定义一个模板函数，可以复用 css 和 访问变量；
 // 函数名字， css，和下面的 styled。div 是一样的。
 
-const circleMixinFunc = (color) => css`
+const circleMixinFunc = (color, size) => css`
   content: "";
-  width: 10px;
-  height: 10px;
+  width: ${size}px;
+  height: ${size}px;
   position: absolute;
   border-radius: 50%;
   background-color: ${color};
@@ -18,22 +18,33 @@ const WrapperAvatar = styled.div`
 
 const StatusAvatar = styled.div`
   position: absolute;
-  left: 7px;
-  top: 7px;
-
+  left: ${(props) => props.statusPosition}px;
+  top: ${(props) => props.statusPosition}px;
   ::before {
-    ${circleMixinFunc("white")}
+    ${(props) => {
+      return circleMixinFunc("white", props.statusCircleSize);
+    }};
     transform: scale(2);
   }
   ::after {
-    ${circleMixinFunc((props) => props.theme.green)}
+    ${(props) => {
+      return circleMixinFunc(props.status, props.statusCircleSize);
+    }};
   }
 `;
 // 因为由于定位是从左上角定位的，这两个圆重叠是在中间的，所以可以通过调整位置来实现。但是更简洁的方法是一样的大小，通过缩放来实现；
 
+// // ::after {
+//     ${circleMixinFunc((props) => ({
+//         color: props.status,
+//         size: props.statusCircleSize,
+//       }))};
+//     }
+// 这么做不能用, 不知道为什么
+
 const ImgWrapperAvatar = styled.div`
-  width: 80px;
-  height: 80px;
+  width: ${(props) => props.size || "100px"};
+  height: ${(props) => props.size || "100px"};
   border-radius: 50%;
   overflow: hidden;
 `;
