@@ -3,7 +3,7 @@ import Avatar from ".";
 import face1 from "../../assets/images/face-male-1.jpg";
 
 export default {
-  title: "Avatar",
+  title: "UI Component/Avatar",
   component: Avatar,
 };
 

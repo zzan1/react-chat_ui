@@ -1,15 +1,12 @@
 import styled, { css } from "styled-components";
-
+import { circle } from "utils/mixins";
 // 定义一个模板函数，可以复用 css 和 访问变量；
 // 函数名字， css，和下面的 styled。div 是一样的。
 
 const circleMixinFunc = (color, size) => css`
   content: "";
-  width: ${size}px;
-  height: ${size}px;
+  ${circle(color, size)};
   position: absolute;
-  border-radius: 50%;
-  background-color: ${color};
 `;
 
 const WrapperAvatar = styled.div`
