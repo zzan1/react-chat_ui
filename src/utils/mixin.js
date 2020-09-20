@@ -1,27 +1,24 @@
 import { css } from "styled-components";
 
-export const circle = (color, size) => css`
+export const circle = (size) => css`
   width: ${size};
   height: ${size};
   border-radius: 50%;
-  background-color: ${color};
 `;
 export const activeBar = ({
   barWidth = "8px",
   shadowWidth = "20px",
 } = {}) => css`
   position: relative;
-  ::before,
-  ::after {
+  &::before,
+  &::after {
     position: absolute;
-    content: "";
     height: 100%;
-
-    left: 0px;
-    top: 0px;
+    content: "";
+    top: 0;
+    left: 0;
   }
-
-  ::before {
+  &::before {
     width: ${barWidth};
     background: linear-gradient(
       180deg,
@@ -29,13 +26,14 @@ export const activeBar = ({
       rgba(79, 157, 222, 1) 100%
     );
   }
-
-  ::after {
+  &::after {
     width: ${shadowWidth};
     background: linear-gradient(
       270deg,
       rgba(41, 47, 76, 1) 0%,
-      rgba(142, 197, 242, 1) 100%
+    rgba(142, 197, 242, 1) 100%); 
+
+    opacity: 0.6;
     );
   }
 `;

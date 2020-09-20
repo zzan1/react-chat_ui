@@ -1,39 +1,28 @@
-import React from "react"; //rfcp
+import React from "react";
 import PropTypes from "prop-types";
-import face1 from "assets/images/face-male-1.jpg";
-import {
-  WrapperAvatar,
-  StatusAvatar,
-  ImgWrapperAvatar,
-  PortraitAvatar,
-} from "./style";
-import theme from "theme";
+import AvatarWrapper, { Status, ImgWrapper, ImgContent } from "./style";
 
-// 使用 ...rest 来接受剩下的对象元素，组成一个名字为 rest 的数组；
-// 如果直接在 <WrapperAvatar {rest}> <WrapperAvatar rest> 都不能传参数;
-// 可以使用 <WrapperAvatar rest={rest}> <WrapperAvatar {...rest}>，后面是吧元素分出来，组成新的属性
-
-// 这些样式只能接受自己的参数，不能接受上一级的参数;
-
-function Avatar({ portraitFile, size, status, ...rest }) {
-  const statusCircleSize = Math.ceil(Number.parseInt(size) / 8);
-  const statusPosition = Math.ceil(Number.parseInt(size) / 10);
+function Avatar({ portrait, status, showStatus, size, ...rest }) {
+  const statusSize = Number.parseInt(size) / 10 + "px";
   return (
-    <WrapperAvatar {...rest}>
-      {status !== "remove" && (
-        <StatusAvatar
-          status={status === "online" ? theme.green : "red"}
-          statusCircleSize={statusCircleSize}
-          statusPosition={statusPosition}
-        ></StatusAvatar>
-      )}
-      <ImgWrapperAvatar size={size}>
-        <PortraitAvatar src={portraitFile} alt="" />
-      </ImgWrapperAvatar>
-    </WrapperAvatar>
+    <AvatarWrapper {...rest}>
+      <Status
+        status={status}
+        showStatus={showStatus}
+        statusSize={statusSize}
+      ></Status>
+      <ImgWrapper size={size}>
+        <ImgContent src={portrait}></ImgContent>
+      </ImgWrapper>
+    </AvatarWrapper>
   );
 }
 
-Avatar.propTypes = {};
+Avatar.propTypes = {
+  portrait: PropTypes.string.isRequired,
+  status: PropTypes.bool,
+  showStatus: PropTypes.bool,
+  size: PropTypes.string,
+};
 
 export default Avatar;

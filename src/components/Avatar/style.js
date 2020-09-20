@@ -1,57 +1,42 @@
-import styled, { css } from "styled-components";
-import { circle } from "utils/mixins";
-// 定义一个模板函数，可以复用 css 和 访问变量；
-// 函数名字， css，和下面的 styled。div 是一样的。
+import styled from "styled-components";
+import { circle } from "utils/mixin";
+// object(...) is not a function 就是这里没加括号
 
-const circleMixinFunc = (color, size) => css`
-  content: "";
-  ${circle(color, size)};
-  position: absolute;
-`;
+const AvatarWrapper = styled.div``;
 
-const WrapperAvatar = styled.div`
+const Status = styled.div`
   position: relative;
-`;
+  &::before,
+  &::after {
+    position: absolute;
+    content: "";
+    top: ${(props) => props.statusSize};
+    left: ${(props) => props.statusSize};
+    ${(props) => circle(props.statusSize)}
+  }
 
-const StatusAvatar = styled.div`
-  position: absolute;
-  left: ${(props) => props.statusPosition}px;
-  top: ${(props) => props.statusPosition}px;
-  ::before {
-    ${(props) => {
-      return circleMixinFunc("white", props.statusCircleSize);
-    }};
+  &::before {
     transform: scale(2);
+    background-color: ${({ theme }) => theme.gray};
+    ${({ showStatus }) => (showStatus ? "" : "visibility: hidden")}
   }
-  ::after {
-    ${(props) => {
-      return circleMixinFunc(props.status, props.statusCircleSize);
-    }};
+  &::after {
+    background-color: ${(props) => (props.status ? props.theme.green : "red")};
+    ${({ showStatus }) => (showStatus ? "" : "visibility: hidden")}
   }
 `;
-// 因为由于定位是从左上角定位的，这两个圆重叠是在中间的，所以可以通过调整位置来实现。但是更简洁的方法是一样的大小，通过缩放来实现；
 
-// // ::after {
-//     ${circleMixinFunc((props) => ({
-//         color: props.status,
-//         size: props.statusCircleSize,
-//       }))};
-//     }
-// 这么做不能用, 不知道为什么
-
-const ImgWrapperAvatar = styled.div`
-  width: ${(props) => props.size || "100px"};
-  height: ${(props) => props.size || "100px"};
-  border-radius: 50%;
+const ImgWrapper = styled.div`
+  ${(props) => circle(props.size)}
   overflow: hidden;
 `;
-// overflow, 把图片超出框体范围的去掉
 
-const PortraitAvatar = styled.img`
-  width: 100%;
+const ImgContent = styled.img`
   height: 100%;
+  width: 100%;
   object-fit: cover;
   object-position: center;
 `;
 
-export { WrapperAvatar, StatusAvatar, ImgWrapperAvatar, PortraitAvatar };
+export default AvatarWrapper;
+export { Status, ImgWrapper, ImgContent };
